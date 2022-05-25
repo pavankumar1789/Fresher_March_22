@@ -1,9 +1,13 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace LinqAssign
+namespace LinqAssignment
 {
+
     class Employee1
     {
+        //public DateTime _DOB;
         public int EmployeeID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -80,7 +84,7 @@ namespace LinqAssign
         }
         public static void ConsulandAssociate()
         {
-            var query = from s in employeeList where s.Title == "Consultant" select s;
+            var query = from s in employeeList where s.Title == "Consultant" || s.Title == "Associate" select s;
             foreach (var item in query)
             {
                 Console.WriteLine(item.EmployeeID + " " + item.FirstName + " " + item.LastName + " " + item.Title + " " + item.DOB + " " + item.DOJ + " " + item.City);
@@ -88,9 +92,78 @@ namespace LinqAssign
         }
         public static void TotNoEmp()
         {
-            var query = (from s in employeeList select s).Count();
-            Console.WriteLine("Count of Employees:", query);
+            int query = (from s in employeeList select s).Count();
+            Console.WriteLine(query);
         }
-        
+        public static void Chennai()
+        {
+            var query = from s in employeeList where s.City == "Chennai" select s;
+            foreach (var item in query)
+            {
+                Console.WriteLine(item.EmployeeID + " " + item.FirstName + " " + item.LastName + " " + item.Title + " " + item.DOB + " " + item.DOJ + " " + item.City);
+            }
+        }
+        public static void JoinedAfter()
+        {
+            var query = (from s in employeeList where s.DOJ > DateTime.Parse("1/1/2015") select s).Count();
+            Console.WriteLine(query);
+        }
+        public static void NotAssociate()
+        {
+            var query = from s in employeeList where s.Title != "Associate" select s;
+            foreach (var item in query)
+            {
+                Console.WriteLine(item.EmployeeID + " " + item.FirstName + " " + item.LastName + " " + item.Title + " " + item.DOB + " " + item.DOJ + " " + item.City);
+            }
+        }
+        public static void TotNoEmpCity()
+        {
+            var query = (from s in employeeList where s.City == "Mumbai" select s).Count();
+            Console.WriteLine(query);
+        }
+        public static void TotNoEmpCityTitle()
+        {
+            var query = (from s in employeeList where s.City == "Mumbai" && s.Title == "Manager" select s).Count();
+            Console.WriteLine(query);
+        }
+        public static void Youngest()
+        {
+            var query = from s in employeeList select s;
+            Console.WriteLine(query);
+            //var today = DateTime.Today ;
+            //var age = today.Year - DOB.Year;
+        }
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("Display all Employees");
+            DisplayAll();
+            Console.WriteLine("Not Mumbai:");
+            NotMumbai();
+            Console.WriteLine("Title as Ass.Manager");
+            TitleAssManager();
+            Console.WriteLine("Starts with S");
+            StartWithS();
+            Console.WriteLine("Joined b:");
+            JoinedBef();
+            Console.WriteLine("DOB after");
+            DobAfter();
+            Console.WriteLine("Consultant and Associate");
+            ConsulandAssociate();
+            Console.WriteLine("Total number of Employees");
+            TotNoEmp();
+            Console.WriteLine("Only Chennai");
+            Chennai();
+            Console.WriteLine("Joined After 1/1/2015");
+            JoinedAfter();
+            Console.WriteLine("Not Associate");
+            NotAssociate();
+            Console.WriteLine("Total number of Employees based on city");
+            TotNoEmpCity();
+            Console.WriteLine("Total number of Employees based on city and Title");
+            TotNoEmpCityTitle();
+            Console.ReadKey();
+        }
     }
 }
+
+
